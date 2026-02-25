@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>طراح لباس هوشمند</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
+    
+    <!-- English Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;700;900&family=Oswald:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- Vazirmatn (Default) -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Vazirmatn"', 'sans-serif'],
+              display: ['"Vazirmatn"', 'sans-serif'],
+            },
+            colors: {
+              background: '#09090b', // Zinc-950
+              surface: '#18181b',    // Zinc-900
+              primary: '#3B82F6',    // Bright Blue
+              secondary: '#60A5FA',  // Lighter Blue
+              accent: '#2563EB',     // Deep Blue
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'slide-up': 'slideUp 0.5s ease-out',
+              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'blob': 'blob 7s infinite',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(20px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      /* --- Custom Persian Fonts --- */
+      
+      /* Alibaba */
+      @font-face { fontFamily: 'Alibaba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWkf5gVfoBlTIYdxai4rQEHcnsA2U9h6GjuS0O') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'Alibaba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWZRqaQHFcPkY6GDrEfWdIMTjSs0Kpob9aQ1iX') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'Alibaba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWgO3X5PspDO4ASPxof0THbtuFG2MZhqzaInkL') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'Alibaba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWJ0C7t3fqam3lisx10HfzQyVevtoFgcOWrZ6h') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* IranSansX */
+      @font-face { fontFamily: 'IranSansX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWlXpawZELwJUzf2FbD8KRWXCtsdEMiuAgH46h') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'IranSansX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWVbuU7CWM5zho2G1wWpDkVltmeUsidASavyZb') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'IranSansX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWdXBm0zcYb9TX2i40Gw7yNtgknEQAPWJhYCO8') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'IranSansX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWcJ1aqLoBVpdvf7Fh5uzkeqXcwij9AGrOJSNP') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* IranYekanX */
+      @font-face { fontFamily: 'IranYekanX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWBGLtYsJKAFX4yvLPVJuZIR32w0NtCHDQUWn9') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'IranYekanX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWa2f79QpV7nKCWNQtX5A9MYsSFDeirbP10oRI') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'IranYekanX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWZRZhxYFcPkY6GDrEfWdIMTjSs0Kpob9aQ1iX') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'IranYekanX'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWfs65mC8DY5ZCS1wzthlRpLQNXIym98rOcGAU') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* Kalameh */
+      @font-face { fontFamily: 'Kalameh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWVT3sOoWM5zho2G1wWpDkVltmeUsidASavyZb') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'Kalameh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCW29LkvUeny6Ogrl37EXKGYBT5h0IWMd2FZi8q') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'Kalameh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWa2xFW0V7nKCWNQtX5A9MYsSFDeirbP10oRIw') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'Kalameh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWVeJ0dbeWM5zho2G1wWpDkVltmeUsidASavyZ') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* Morabba */
+      @font-face { fontFamily: 'Morabba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWjtbzDcv6CiBJP01qH5eQ2bfsWrEmvoOgzyuU') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'Morabba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWiclVLz0cJxTw0VOF6pMD4zCgrRudNkyf9Pet') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'Morabba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWxQohWCu4WLq4h6ZbegtSl8A7Xw2YKRnmpcVy') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'Morabba'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWU7ab5DqXzDcqJVGl0CnyekP8EL1HwAjtImBs') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* YekanBakh */
+      @font-face { fontFamily: 'YekanBakh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCW9LVCq3lpBbjpnwL8W2sqZM5VekAc1RuxdJgy') format('woff2'); font-weight: 300; font-style: normal; }
+      @font-face { fontFamily: 'YekanBakh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWQpSGduaDupy5oitI9YSWV8a6NAL0mXBzjlRH') format('woff2'); font-weight: 400; font-style: normal; }
+      @font-face { fontFamily: 'YekanBakh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCW38IF3VLITClFo7fpPkWUuzGtn9BSM1EvXdHA') format('woff2'); font-weight: 700; font-style: normal; }
+      @font-face { fontFamily: 'YekanBakh'; src: url('https://famjljl5gg.ufs.sh/f/aej4FOV7nKCWMRRD5XDyP1TFSZvyopzXDRIbfcB5tC9nrKWw') format('woff2'); font-weight: 900; font-style: normal; }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #09090b; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #27272a; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #3B82F6; 
+      }
+      
+      .workspace-grid {
+        background-color: #111111; 
+        background-image: 
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        position: relative;
+      }
+      
+      .workspace-grid::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at center, transparent 20%, #09090b 100%);
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .canvas-container {
+        background: transparent !important;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.40.0",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "recharts": "https://esm.sh/recharts@^2.12.0?deps=react@^19.2.4,react-dom@^19.2.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-background text-white antialiased overflow-hidden">
+    <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>
