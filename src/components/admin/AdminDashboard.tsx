@@ -35,13 +35,13 @@ interface AdminDashboardProps {
 }
 
 const chartData = [
-  { name: 'شنبه', designs: 40, exports: 24 },
-  { name: 'یکشنبه', designs: 30, exports: 13 },
-  { name: 'دوشنبه', designs: 20, exports: 98 },
-  { name: 'سه‌شنبه', designs: 27, exports: 39 },
-  { name: 'چهارشنبه', designs: 18, exports: 48 },
-  { name: 'پنجشنبه', designs: 23, exports: 38 },
-  { name: 'جمعه', designs: 34, exports: 43 },
+  { name: 'شنبه', views: 120, designs: 40 },
+  { name: 'یکشنبه', views: 150, designs: 30 },
+  { name: 'دوشنبه', views: 200, designs: 20 },
+  { name: 'سه‌شنبه', views: 180, designs: 27 },
+  { name: 'چهارشنبه', views: 250, designs: 18 },
+  { name: 'پنجشنبه', views: 300, designs: 23 },
+  { name: 'جمعه', views: 350, designs: 34 },
 ];
 
 const pieData = [
@@ -62,7 +62,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
   const [formData, setFormData] = useState({
     name: '',
     type: GARMENT_TYPES[0].id,
-    price: 25,
     sizes: ['M', 'L', 'XL'],
     colors: [] as ProductColor[]
   });
@@ -90,7 +89,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
       setFormData({
         name: product.name,
         type: garmentType,
-        price: product.price || 25,
         sizes: [...product.sizes],
         colors: [...product.colors]
       });
@@ -99,7 +97,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
       setFormData({
         name: '',
         type: GARMENT_TYPES[0].id,
-        price: 25,
         sizes: ['M', 'L', 'XL'],
         colors: [AVAILABLE_COLORS[0], AVAILABLE_COLORS[1]]
       });
@@ -125,7 +122,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
       id: editingProduct ? editingProduct.id : `product-${Date.now()}`,
       name: formData.name,
       type: selectedGarment.name,
-      price: formData.price,
       sizes: formData.sizes,
       colors: formData.colors,
       views: [
@@ -247,25 +243,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
               {/* Stats Grid */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <StatCard 
-                  title="طرح‌های ایجاد شده" 
-                  value="۱,۲۸۴" 
+                  title="بازدید کل" 
+                  value="۱,۵۵۰" 
+                  trend="+۲۴٪" 
+                  icon={Activity} 
+                />
+                <StatCard 
+                  title="کاربران فعال (طراحان)" 
+                  value="۳۴۲" 
                   trend="+۱۲٪" 
-                  icon={ImageIcon} 
-                />
-                <StatCard 
-                  title="خروجی‌های گرفته شده" 
-                  value="۸۵۶" 
-                  trend="+۵٪" 
-                  icon={Download} 
-                />
-                <StatCard 
-                  title="جستجوی تصاویر" 
-                  value="۳,۴۹۲" 
-                  trend="+۱۸٪" 
                   icon={Globe} 
                 />
                 <StatCard 
-                  title="میانگین زمان استفاده" 
+                  title="طرح‌های ایجاد شده" 
+                  value="۱,۲۸۴" 
+                  trend="+۱۸٪" 
+                  icon={ImageIcon} 
+                />
+                <StatCard 
+                  title="میانگین زمان طراحی" 
                   value="۱۴ دقیقه" 
                   trend="+۲٪" 
                   icon={Clock} 
@@ -299,7 +295,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
                 </div>
 
                 <div className="bg-surface border border-white/5 rounded-3xl p-6 shadow-xl animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-                  <h3 className="text-lg font-bold text-white mb-6">خروجی‌های گرفته شده</h3>
+                  <h3 className="text-lg font-bold text-white mb-6">بازدید روزانه</h3>
                   <div className="h-72 w-full" dir="ltr">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={chartData}>
@@ -310,7 +306,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
                           contentStyle={{ backgroundColor: '#18181b', borderColor: '#ffffff10', borderRadius: '12px', color: '#fff' }}
                           cursor={{ fill: '#ffffff05' }}
                         />
-                        <Bar dataKey="exports" fill="#60A5FA" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="views" fill="#60A5FA" radius={[4, 4, 0, 0]} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -655,16 +651,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onBackToEdito
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
                     placeholder="مثال: تی‌شرت یقه گرد مردانه"
-                    className="w-full bg-background border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm font-medium text-zinc-300">قیمت (دلار)</label>
-                  <input 
-                    type="number" 
-                    value={formData.price}
-                    onChange={(e) => setFormData({...formData, price: parseInt(e.target.value)})}
                     className="w-full bg-background border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
                   />
                 </div>

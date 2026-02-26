@@ -65,14 +65,14 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess, onClose }) => {
         </div>
 
         {/* User Warning Notice */}
-        <div className="mb-8 bg-amber-500/10 border border-amber-500/20 rounded-2xl p-4 flex gap-4 items-start animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
-          <div className="p-2 bg-amber-500/20 rounded-xl text-amber-500 shrink-0">
+        <div className="mb-8 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 flex gap-4 items-start animate-fade-in" style={{ animationDelay: '200ms', animationFillMode: 'both' }}>
+          <div className="p-2 bg-red-500/20 rounded-xl text-red-500 shrink-0">
             <AlertTriangle size={20} />
           </div>
           <div>
-            <h4 className="text-amber-500 font-bold text-sm mb-1">توجه کاربران گرامی</h4>
-            <p className="text-amber-500/80 text-xs leading-relaxed">
-              این بخش صرفاً جهت مدیریت سیستم طراحی شده است. برای استفاده از ابزار طراحی لباس نیازی به ورود یا ثبت‌نام ندارید.
+            <h4 className="text-red-500 font-bold text-sm mb-1">توجه: دسترسی غیرمجاز</h4>
+            <p className="text-red-500/80 text-xs leading-relaxed">
+              این صفحه صرفاً جهت ورود مدیر سایت برای مدیریت محصولات و آمار بازدید است. کاربران عادی به هیچ وجه نباید وارد این بخش شوند. این پلتفرم برای فروش نیست و فقط ابزاری برای طراحی است.
             </p>
           </div>
         </div>

@@ -21,7 +21,6 @@ const ProductManager: React.FC<ProductManagerProps> = ({ products, onUpdateProdu
       id: `product-${Date.now()}`,
       name: 'محصول جدید',
       type: 'تی‌شرت',
-      price: 0,
       sizes: ['S', 'M', 'L', 'XL'],
       colors: [{ id: 'white', name: 'سفید', hex: '#ffffff' }],
       views: [{
@@ -134,9 +133,8 @@ const ProductManager: React.FC<ProductManagerProps> = ({ products, onUpdateProdu
             </div>
             
             <h3 className="text-lg font-bold text-white mb-1">{product.name}</h3>
-            <p className="text-zinc-500 text-sm mb-4">{product.price.toLocaleString()} تومان</p>
             
-            <div className="flex gap-2 mb-4">
+            <div className="flex gap-2 mb-4 mt-4">
               {product.colors.map(color => (
                 <div 
                   key={color.id} 
@@ -225,15 +223,6 @@ const ProductEditor: React.FC<ProductEditorProps> = ({ product, onChange, onSave
                 type="text" 
                 value={product.name}
                 onChange={(e) => updateField('name', e.target.value)}
-                className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm text-zinc-400">قیمت (تومان)</label>
-              <input 
-                type="number" 
-                value={product.price}
-                onChange={(e) => updateField('price', Number(e.target.value))}
                 className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary/50 transition-colors"
               />
             </div>

@@ -67,11 +67,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               className="w-full h-full object-cover relative z-10 transition-transform duration-500 ease-out group-hover:scale-105 drop-shadow-xl"
             />
         )}
-        
-        {/* Floating Price Tag */}
-        <div className="absolute top-3 left-3 bg-background/90 backdrop-blur-md border border-white/10 px-2 py-1 rounded-md text-[11px] font-mono text-zinc-200 z-20 shadow-sm">
-          ${product.price}
-        </div>
       </div>
 
       {/* Product Info */}

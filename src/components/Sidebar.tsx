@@ -5,9 +5,10 @@ import { TabType } from '../types';
 interface SidebarProps {
   activeTab: TabType;
   setActiveTab: (tab: TabType) => void;
+  onUserClick: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, onUserClick }) => {
   const tabs = [
     { id: TabType.PRODUCTS, icon: Shirt, label: 'محصولات' },
     { id: TabType.TEXT, icon: Type, label: 'متن' },
@@ -80,7 +81,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
 
       {/* User Profile Action */}
       <div className="mt-auto pt-4 pb-2 w-full px-4 border-t border-white/5">
-         <button className="w-full aspect-square rounded-2xl bg-surface border border-white/5 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-surface-hover hover:border-white/10 transition-all duration-300 group overflow-hidden relative">
+         <button 
+            onClick={onUserClick}
+            className="w-full aspect-square rounded-2xl bg-surface border border-white/5 flex items-center justify-center text-zinc-500 hover:text-white hover:bg-surface-hover hover:border-white/10 transition-all duration-300 group overflow-hidden relative"
+         >
             <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             <User size={20} className="group-hover:scale-110 transition-transform relative z-10" />
          </button>
