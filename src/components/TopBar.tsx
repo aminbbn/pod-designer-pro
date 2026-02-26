@@ -5,9 +5,10 @@ interface TopBarProps {
   onUndo: () => void;
   onRedo: () => void;
   onExport: () => void;
+  onShare: () => void;
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onUndo, onRedo, onExport }) => {
+const TopBar: React.FC<TopBarProps> = ({ onUndo, onRedo, onExport, onShare }) => {
   return (
     <div className="h-16 bg-surface border-b border-white/5 flex items-center justify-between px-6 z-30 shadow-sm relative">
       <div className="flex items-center gap-4">
@@ -36,7 +37,10 @@ const TopBar: React.FC<TopBarProps> = ({ onUndo, onRedo, onExport }) => {
       </div>
 
       <div className="flex items-center gap-3">
-        <button className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors">
+        <button 
+          onClick={onShare}
+          className="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+        >
           <Share2 size={16} />
           <span>اشتراک</span>
         </button>

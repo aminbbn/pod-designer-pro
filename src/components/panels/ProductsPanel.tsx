@@ -6,16 +6,20 @@ interface ProductsPanelProps {
   products: Product[];
   currentProduct: Product;
   currentProductColor: ProductColor;
+  currentProductSize: string;
   onProductChange: (product: Product) => void;
   onColorChange: (color: ProductColor) => void;
+  onSizeChange: (size: string) => void;
 }
 
 const ProductsPanel: React.FC<ProductsPanelProps> = ({
   products,
   currentProduct,
   currentProductColor,
+  currentProductSize,
   onProductChange,
   onColorChange,
+  onSizeChange,
 }) => {
   return (
     <div className="space-y-8 animate-fade-in pb-10" dir="rtl">
@@ -71,9 +75,17 @@ const ProductsPanel: React.FC<ProductsPanelProps> = ({
             </div>
             <div className="flex flex-wrap gap-2.5">
               {currentProduct.sizes.map(size => (
-                <div key={size} className="px-4 py-2 bg-surface border border-white/5 hover:border-white/10 hover:bg-surface-hover transition-colors rounded-lg text-xs font-mono text-zinc-300 shadow-sm cursor-default">
+                <button 
+                  key={size} 
+                  onClick={() => onSizeChange(size)}
+                  className={`px-4 py-2 border transition-all rounded-lg text-xs font-mono shadow-sm ${
+                    currentProductSize === size 
+                    ? 'bg-primary/20 border-primary text-primary font-bold' 
+                    : 'bg-surface border-white/5 hover:border-white/10 hover:bg-surface-hover text-zinc-300'
+                  }`}
+                >
                   {size}
-                </div>
+                </button>
               ))}
             </div>
           </div>

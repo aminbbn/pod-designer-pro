@@ -18,8 +18,10 @@ interface ToolsPanelProps {
   products: Product[];
   currentProduct: Product;
   currentProductColor: ProductColor;
+  currentProductSize: string;
   onProductChange: (product: Product) => void;
   onColorChange: (color: ProductColor) => void;
+  onSizeChange: (size: string) => void;
   onAddText: (text: string, font: string, options?: any) => void;
   onAddImage: (url: string, options?: any) => void;
   onAddGraphic: (pathData: string) => void;
@@ -42,8 +44,10 @@ const ToolsPanel: React.FC<ToolsPanelProps> = ({
   products,
   currentProduct,
   currentProductColor,
+  currentProductSize,
   onProductChange,
   onColorChange,
+  onSizeChange,
   onAddText,
   onAddImage,
   onAddGraphic,
@@ -166,8 +170,10 @@ const ToolsPanel: React.FC<ToolsPanelProps> = ({
             products={products}
             currentProduct={currentProduct}
             currentProductColor={currentProductColor}
+            currentProductSize={currentProductSize}
             onProductChange={onProductChange}
             onColorChange={onColorChange}
+            onSizeChange={onSizeChange}
           />
         )}
 

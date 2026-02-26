@@ -201,6 +201,7 @@ interface CanvasAreaProps {
   currentViewIndex: number;
   setCurrentViewIndex: (index: number) => void;
   currentProductColor: string;
+  currentProductSize: string;
   onSelectionCleared: () => void;
   onObjectSelected: (obj: any) => void;
   setLayers: (layers: any[]) => void;
@@ -213,6 +214,7 @@ const CanvasArea: React.FC<CanvasAreaProps> = ({
   currentViewIndex,
   setCurrentViewIndex,
   currentProductColor,
+  currentProductSize,
   onSelectionCleared,
   onObjectSelected,
   setLayers,
@@ -268,6 +270,12 @@ const CanvasArea: React.FC<CanvasAreaProps> = ({
   return (
     <div ref={containerRef} className={`flex-1 bg-background relative flex items-center justify-center overflow-hidden ${settings.showGrid ? 'workspace-grid' : ''}`}>
        
+       {/* Size Indicator */}
+       <div className="absolute top-8 right-8 z-40 bg-surface/80 backdrop-blur-md border border-white/10 px-4 py-2 rounded-xl shadow-lg flex items-center gap-2" dir="rtl">
+           <span className="text-xs text-zinc-400">سایز:</span>
+           <span className="text-sm font-bold text-white font-mono bg-primary/20 px-2 py-0.5 rounded">{currentProductSize}</span>
+       </div>
+
        {/* View Toggle (Front/Back) */}
        {currentProduct.views.length > 1 && (
            <div className="absolute top-8 left-0 right-0 flex justify-center z-40 pointer-events-none">
@@ -291,7 +299,7 @@ const CanvasArea: React.FC<CanvasAreaProps> = ({
 
        {/* Product Display Container - Base Size (500x600) */}
        <div 
-         className="relative z-10 origin-center shadow-2xl"
+         className="relative z-10 origin-center shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
          style={{
              width: `${BASE_WIDTH}px`,
              height: `${BASE_HEIGHT}px`,

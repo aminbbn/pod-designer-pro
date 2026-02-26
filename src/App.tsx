@@ -3,6 +3,7 @@ import TopBar from './components/TopBar';
 import Sidebar from './components/Sidebar';
 import ToolsPanel from './components/ToolsPanel';
 import CanvasArea from './components/CanvasArea';
+import ShareModal from './components/ShareModal';
 import LoginPage from './components/admin/LoginPage';
 import AdminDashboard from './components/admin/AdminDashboard';
 import { TabType, Product, ProductColor, DesignConcept } from './types';
@@ -16,9 +17,11 @@ const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('editor');
   const [activeFont, setActiveFont] = useState('Vazirmatn');
   const [currentProduct, setCurrentProduct] = useState<Product>(products[0]);
+  const [currentProductSize, setCurrentProductSize] = useState<string>(products[0].sizes[0]);
   const [currentViewIndex, setCurrentViewIndex] = useState(0);
   const [currentProductColor, setCurrentProductColor] = useState<ProductColor>(products[0].colors[0]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
   const [designConcepts, setDesignConcepts] = useState<DesignConcept[]>([]);
   const [layers, setLayers] = useState<any[]>([]);
@@ -102,6 +105,7 @@ const App: React.FC = () => {
     
     setCurrentProduct(product);
     setCurrentProductColor(product.colors[0]);
+    setCurrentProductSize(product.sizes[0]);
     setCurrentViewIndex(0);
     setSelectedObject(null);
   };
@@ -609,6 +613,7 @@ const App: React.FC = () => {
             onUndo={() => {}} 
             onRedo={() => {}} 
             onExport={handleExport}
+            onShare={() => setIsShareModalOpen(true)}
           />
           
           <div className="flex flex-1 overflow-hidden">
@@ -623,8 +628,10 @@ const App: React.FC = () => {
               products={products}
               currentProduct={currentProduct}
               currentProductColor={currentProductColor}
+              currentProductSize={currentProductSize}
               onProductChange={handleProductChange}
               onColorChange={setCurrentProductColor}
+              onSizeChange={setCurrentProductSize}
               onAddText={handleAddText}
               onAddImage={handleAddImage}
               onAddGraphic={handleAddGraphic}
@@ -655,12 +662,17 @@ const App: React.FC = () => {
               currentViewIndex={currentViewIndex}
               setCurrentViewIndex={handleViewChange}
               currentProductColor={currentProductColor.hex}
+              currentProductSize={currentProductSize}
               onSelectionCleared={() => setSelectedObject(null)}
               onObjectSelected={setSelectedObject}
               setLayers={setLayers}
               settings={canvasSettings}
             />
           </div>
+          <ShareModal 
+            isOpen={isShareModalOpen} 
+            onClose={() => setIsShareModalOpen(false)} 
+          />
         </>
       )}
     </div>
