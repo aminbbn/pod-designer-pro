@@ -225,18 +225,18 @@ const UploadsPanel: React.FC<UploadsPanelProps> = ({
                   <div className="p-3 bg-surface-hover flex items-center gap-2 text-xs font-bold text-slate-300 border-b border-white/5">
                     <Move size={14} className="text-orange-500" />موقعیت و ابعاد
                   </div>
-                  <div className="p-4 space-y-4">
+                  <div className="p-3 space-y-3">
                         <div className="grid grid-cols-2 gap-3">
                             <input type="number" value={Math.round(selectedObject?.left || 0)} onChange={(e) => onUpdateObject('left', parseInt(e.target.value))} className="w-full bg-background border border-white/5 rounded-lg p-2 text-white text-xs text-center focus:border-primary/50" placeholder="X" />
                             <input type="number" value={Math.round(selectedObject?.top || 0)} onChange={(e) => onUpdateObject('top', parseInt(e.target.value))} className="w-full bg-background border border-white/5 rounded-lg p-2 text-white text-xs text-center focus:border-primary/50" placeholder="Y" />
                         </div>
                         <div>
                             <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>چرخش</span><span className="font-mono text-orange-400">{rotation}°</span></div>
-                            <input type="range" min="0" max="360" value={rotation} onChange={(e) => onUpdateObject('angle', parseInt(e.target.value))} className="w-full h-1 bg-border rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full" />
+                            <input type="range" min="0" max="360" value={rotation} onChange={(e) => onUpdateObject('angle', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                         </div>
                         <div>
                             <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>مقیاس</span><span className="font-mono text-emerald-400">{scaleX}%</span></div>
-                            <input type="range" min="10" max="300" value={scaleX} onChange={(e) => { const val = parseInt(e.target.value) / 100; onUpdateObject('scaleX', val); onUpdateObject('scaleY', val); }} className="w-full h-1 bg-border rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full" />
+                            <input type="range" min="10" max="300" value={scaleX} onChange={(e) => { const val = parseInt(e.target.value) / 100; onUpdateObject('scaleX', val); onUpdateObject('scaleY', val); }} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                         </div>
                   </div>
               </div>
@@ -246,10 +246,10 @@ const UploadsPanel: React.FC<UploadsPanelProps> = ({
                   <div className="p-3 bg-surface-hover flex items-center gap-2 text-xs font-bold text-slate-300 border-b border-white/5">
                     <Eye size={14} className="text-blue-500" />ظاهر
                   </div>
-                  <div className="p-4 space-y-4">
+                  <div className="p-3 space-y-3">
                         <div>
                             <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>شفافیت (Opacity)</span><span className="font-mono text-blue-400">{opacity}%</span></div>
-                            <input type="range" min="0" max="100" value={opacity} onChange={(e) => onUpdateObject('opacity', parseInt(e.target.value) / 100)} className="w-full h-1 bg-border rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:rounded-full" />
+                            <input type="range" min="0" max="100" value={opacity} onChange={(e) => onUpdateObject('opacity', parseInt(e.target.value) / 100)} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                         </div>
                   </div>
               </div>

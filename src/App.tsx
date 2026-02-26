@@ -16,12 +16,95 @@ const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('editor');
   const [activeFont, setActiveFont] = useState('Vazirmatn');
   const [currentProduct, setCurrentProduct] = useState<Product>(products[0]);
+  const [currentViewIndex, setCurrentViewIndex] = useState(0);
   const [currentProductColor, setCurrentProductColor] = useState<ProductColor>(products[0].colors[0]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [aiPrompt, setAiPrompt] = useState('');
   const [designConcepts, setDesignConcepts] = useState<DesignConcept[]>([]);
   const [layers, setLayers] = useState<any[]>([]);
   const [selectedObject, setSelectedObject] = useState<any>(null);
+  const viewStatesRef = useRef<Record<string, any>>({});
+
+  const handleViewChange = (newIndex: number) => {
+    if (newIndex === currentViewIndex) return;
+    
+    if (canvasRef.current) {
+      // Save current state
+      const stateKey = `${currentProduct.id}-${currentViewIndex}`;
+      viewStatesRef.current[stateKey] = canvasRef.current.toJSON(['id', 'name', 'selectable', 'snapAngle']);
+      
+      // Load new state
+      const newStateKey = `${currentProduct.id}-${newIndex}`;
+      const newState = viewStatesRef.current[newStateKey];
+      
+      canvasRef.current.clear();
+      if (newState) {
+        canvasRef.current.loadFromJSON(newState, () => {
+          const printArea = currentProduct.views[newIndex].printArea;
+          const clipRect = new window.fabric.Rect({
+              left: printArea.left,
+              top: printArea.top,
+              width: printArea.width,
+              height: printArea.height,
+              absolutePositioned: true,
+              fill: 'transparent',
+              selectable: false,
+              evented: false,
+              strokeWidth: 0
+          });
+          canvasRef.current.clipPath = clipRect;
+          canvasRef.current.requestRenderAll();
+          // Trigger layer update
+          canvasRef.current.fire('object:modified');
+        });
+      } else {
+        canvasRef.current.fire('object:modified');
+      }
+    }
+    
+    setCurrentViewIndex(newIndex);
+    setSelectedObject(null);
+  };
+
+  const handleProductChange = (product: Product) => {
+    if (canvasRef.current) {
+      // Save current
+      const stateKey = `${currentProduct.id}-${currentViewIndex}`;
+      viewStatesRef.current[stateKey] = canvasRef.current.toJSON(['id', 'name', 'selectable', 'snapAngle']);
+      
+      // Load new
+      const newStateKey = `${product.id}-0`;
+      const newState = viewStatesRef.current[newStateKey];
+      
+      canvasRef.current.clear();
+      if (newState) {
+        canvasRef.current.loadFromJSON(newState, () => {
+          const printArea = product.views[0].printArea;
+          const clipRect = new window.fabric.Rect({
+              left: printArea.left,
+              top: printArea.top,
+              width: printArea.width,
+              height: printArea.height,
+              absolutePositioned: true,
+              fill: 'transparent',
+              selectable: false,
+              evented: false,
+              strokeWidth: 0
+          });
+          canvasRef.current.clipPath = clipRect;
+          canvasRef.current.requestRenderAll();
+          canvasRef.current.fire('object:modified');
+        });
+      } else {
+        canvasRef.current.fire('object:modified');
+      }
+    }
+    
+    setCurrentProduct(product);
+    setCurrentProductColor(product.colors[0]);
+    setCurrentViewIndex(0);
+    setSelectedObject(null);
+  };
 
   // --- AI Actions ---
   const handleGenerateAI = async () => {
@@ -47,7 +130,7 @@ const App: React.FC = () => {
     for (const el of concept.elements) {
       if (el.type === 'text') {
         handleAddText(el.content || '', el.fontFamily || 'Vazirmatn', {
-          top: currentProduct.views[0].printArea.top + (currentProduct.views[0].printArea.height / 2) + (el.yOffset || 0),
+          top: currentProduct.views[currentViewIndex].printArea.top + (currentProduct.views[currentViewIndex].printArea.height / 2) + (el.yOffset || 0),
           fill: el.fill || '#ffffff',
           fontSize: el.fontSize || 40,
           fontWeight: el.fontWeight || 'normal'
@@ -57,7 +140,7 @@ const App: React.FC = () => {
         const images = await searchPixabayImages(el.query);
         if (images.length > 0) {
           handleAddImage(images[0].largeImageURL, {
-            top: currentProduct.views[0].printArea.top + (currentProduct.views[0].printArea.height / 2) + (el.yOffset || 0)
+            top: currentProduct.views[currentViewIndex].printArea.top + (currentProduct.views[currentViewIndex].printArea.height / 2) + (el.yOffset || 0)
           });
         }
       }
@@ -94,7 +177,7 @@ const App: React.FC = () => {
   // --- Canvas Actions ---
 
   const getSafeZoneConfig = (objWidth: number, objHeight: number) => {
-      const printArea = currentProduct.views[0].printArea;
+      const printArea = currentProduct.views[currentViewIndex].printArea;
       
       // Target size: 60% of the print area dimensions for a nice initial fit
       const targetWidth = printArea.width * 0.6;
@@ -115,7 +198,7 @@ const App: React.FC = () => {
   const handleAddText = (text: string, fontFamily: string, options: any = {}) => {
     if (!canvasRef.current || !window.fabric) return;
     
-    const printArea = currentProduct.views[0].printArea;
+    const printArea = currentProduct.views[currentViewIndex].printArea;
     const centerX = printArea.left + (printArea.width / 2);
     const centerY = printArea.top + (printArea.height / 2);
     
@@ -540,7 +623,7 @@ const App: React.FC = () => {
               products={products}
               currentProduct={currentProduct}
               currentProductColor={currentProductColor}
-              onProductChange={(p) => { setCurrentProduct(p); setCurrentProductColor(p.colors[0]); }}
+              onProductChange={handleProductChange}
               onColorChange={setCurrentProductColor}
               onAddText={handleAddText}
               onAddImage={handleAddImage}
@@ -568,7 +651,9 @@ const App: React.FC = () => {
             
             <CanvasArea 
               canvasRef={canvasRef}
-              currentView={currentProduct.views[0]}
+              currentProduct={currentProduct}
+              currentViewIndex={currentViewIndex}
+              setCurrentViewIndex={handleViewChange}
               currentProductColor={currentProductColor.hex}
               onSelectionCleared={() => setSelectedObject(null)}
               onObjectSelected={setSelectedObject}

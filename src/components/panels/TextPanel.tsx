@@ -169,7 +169,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
   const displayedFonts = fontTab === 'fa' ? FARSI_FONTS : ENGLISH_FONTS;
 
   return (
-    <div className="space-y-6 animate-fade-in p-6 pb-20">
+    <div className="space-y-6 animate-fade-in pb-20" dir="rtl">
       
       {/* 1. QUICK ADD (Always Visible) */}
       <div className="space-y-2">
@@ -253,12 +253,12 @@ const TextPanel: React.FC<TextPanelProps> = ({
                   <Type size={14} className="text-primary" />
                   تنظیمات متن
               </div>
-              <div className="p-4 space-y-4">
-                  <div className="flex bg-background rounded-lg p-1 border border-white/5 justify-between">
+              <div className="p-3 space-y-3">
+                  <div className="flex bg-background rounded-lg p-1 border border-white/5 justify-center gap-2">
                       <button onClick={() => onUpdateObject('fontWeight', selectedObject?.fontWeight === 'bold' ? 'normal' : 'bold')} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.fontWeight === 'bold' ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><Bold size={16} /></button>
                       <button onClick={() => onUpdateObject('fontStyle', selectedObject?.fontStyle === 'italic' ? 'normal' : 'italic')} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.fontStyle === 'italic' ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><Italic size={16} /></button>
                       <button onClick={() => onUpdateObject('underline', !selectedObject?.underline)} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.underline ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><Underline size={16} /></button>
-                      <div className="w-px bg-border my-1 mx-1"></div>
+                      <div className="w-px bg-white/10 my-1 mx-1"></div>
                       <button onClick={() => onUpdateObject('textAlign', 'right')} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.textAlign === 'right' ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><AlignRight size={16} /></button>
                       <button onClick={() => onUpdateObject('textAlign', 'center')} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.textAlign === 'center' ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><AlignCenter size={16} /></button>
                       <button onClick={() => onUpdateObject('textAlign', 'left')} className={`p-2 rounded hover:bg-surface-hover transition-colors ${selectedObject?.textAlign === 'left' ? 'text-primary bg-surface-hover' : 'text-zinc-500'}`}><AlignLeft size={16} /></button>
@@ -270,7 +270,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                               <span>سایز فونت</span>
                               <span>{isTextSelected ? Math.round(selectedObject.fontSize) : 0}</span>
                           </div>
-                          <input type="range" min="10" max="200" value={isTextSelected ? selectedObject.fontSize : 40} onChange={(e) => onUpdateObject('fontSize', parseInt(e.target.value))} className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                          <input type="range" min="10" max="200" value={isTextSelected ? selectedObject.fontSize : 40} onChange={(e) => onUpdateObject('fontSize', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                       </div>
                   </div>
               </div>
@@ -282,7 +282,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                   <Move size={14} className="text-orange-500" />
                   موقعیت و چرخش
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-3 space-y-3">
                   <div className="grid grid-cols-2 gap-3">
                       <div>
                           <label className="text-[10px] text-zinc-500 mb-1 block">X (چپ/راست)</label>
@@ -317,7 +317,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                             max="360" 
                             value={Math.round(selectedObject?.angle || 0)} 
                             onChange={(e) => onUpdateObject('angle', parseInt(e.target.value))} 
-                            className="flex-1 h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full" 
+                            className="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-orange-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" 
                         />
                          {Math.round(selectedObject?.angle || 0) !== 0 && (
                             <button 
@@ -358,7 +358,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                       </button>
                   )}
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-3 space-y-3">
                    {/* Width */}
                    <div>
                       <div className="flex justify-between text-[10px] text-zinc-500 mb-1">
@@ -371,7 +371,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                         max="300" 
                         value={scaleX} 
                         onChange={(e) => updateScale('X', parseInt(e.target.value))} 
-                        className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full" 
+                        className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" 
                       />
                    </div>
 
@@ -387,7 +387,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                         max="300" 
                         value={scaleY} 
                         onChange={(e) => updateScale('Y', parseInt(e.target.value))} 
-                        className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full" 
+                        className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-emerald-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" 
                       />
                    </div>
               </div>
@@ -399,7 +399,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                   <Palette size={14} className="text-rose-500" />
                   رنگ و حاشیه
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-3 space-y-3">
                   {/* Fill Type Tabs */}
                   <div className="flex bg-background rounded-lg p-1 border border-white/5 mb-4">
                       <button 
@@ -477,7 +477,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                                   max="360" 
                                   value={gradientState.angle} 
                                   onChange={(e) => updateGradientState('angle', parseInt(e.target.value))} 
-                                  className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" 
+                                  className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" 
                               />
                           </div>
 
@@ -520,7 +520,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                         
                         {selectedObject?.strokeWidth > 0 && (
                             <div className="space-y-3 animate-slide-up">
-                                <input type="range" min="0" max="10" step="0.1" value={selectedObject?.strokeWidth || 0} onChange={(e) => onUpdateObject('strokeWidth', parseFloat(e.target.value))} className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-rose-500 [&::-webkit-slider-thumb]:rounded-full" />
+                                <input type="range" min="0" max="10" step="0.1" value={selectedObject?.strokeWidth || 0} onChange={(e) => onUpdateObject('strokeWidth', parseFloat(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-rose-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                 
                                 {/* Stroke Position Toggle */}
                                 <div className="flex bg-background rounded-lg p-1 border border-white/5">
@@ -549,7 +549,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                   <Droplets size={14} className="text-cyan-500" />
                   سایه و افکت
               </div>
-              <div className="p-4 space-y-4">
+              <div className="p-3 space-y-3">
                    <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <input 
@@ -577,7 +577,7 @@ const TextPanel: React.FC<TextPanelProps> = ({
                                   <span>محو شدگی (Blur)</span>
                                   <span>{selectedObject?.shadow?.blur || 0}</span>
                               </div>
-                              <input type="range" min="0" max="100" value={selectedObject?.shadow?.blur || 0} onChange={(e) => handleShadowChange('blur', parseInt(e.target.value))} className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full" />
+                              <input type="range" min="0" max="100" value={selectedObject?.shadow?.blur || 0} onChange={(e) => handleShadowChange('blur', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                            </div>
 
                            <div className="grid grid-cols-2 gap-3">
@@ -585,13 +585,13 @@ const TextPanel: React.FC<TextPanelProps> = ({
                                   <div className="flex justify-between text-[10px] text-zinc-500 mb-1">
                                       <span>X Offset</span>
                                   </div>
-                                  <input type="range" min="-50" max="50" value={selectedObject?.shadow?.offsetX || 0} onChange={(e) => handleShadowChange('offsetX', parseInt(e.target.value))} className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full" />
+                                  <input type="range" min="-50" max="50" value={selectedObject?.shadow?.offsetX || 0} onChange={(e) => handleShadowChange('offsetX', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                </div>
                                <div>
                                   <div className="flex justify-between text-[10px] text-zinc-500 mb-1">
                                       <span>Y Offset</span>
                                   </div>
-                                  <input type="range" min="-50" max="50" value={selectedObject?.shadow?.offsetY || 0} onChange={(e) => handleShadowChange('offsetY', parseInt(e.target.value))} className="w-full h-1 bg-border rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full" />
+                                  <input type="range" min="-50" max="50" value={selectedObject?.shadow?.offsetY || 0} onChange={(e) => handleShadowChange('offsetY', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-cyan-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                </div>
                            </div>
                        </div>

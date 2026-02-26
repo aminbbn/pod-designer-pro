@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ProductView } from '../types';
+import { Product, ProductView } from '../types';
 import { Maximize } from 'lucide-react';
 
 // --- Sub-Component: Product Backdrop (The T-Shirt/Hoodie) ---
@@ -197,7 +197,9 @@ const FabricLayer: React.FC<FabricLayerProps> = ({
 // --- Main Component: Canvas Area ---
 interface CanvasAreaProps {
   canvasRef: React.MutableRefObject<any>; // fabric.Canvas
-  currentView: ProductView;
+  currentProduct: Product;
+  currentViewIndex: number;
+  setCurrentViewIndex: (index: number) => void;
   currentProductColor: string;
   onSelectionCleared: () => void;
   onObjectSelected: (obj: any) => void;
@@ -207,15 +209,31 @@ interface CanvasAreaProps {
 
 const CanvasArea: React.FC<CanvasAreaProps> = ({ 
   canvasRef, 
-  currentView, 
+  currentProduct,
+  currentViewIndex,
+  setCurrentViewIndex,
   currentProductColor,
   onSelectionCleared,
   onObjectSelected,
   setLayers,
   settings
 }) => {
+  const currentView = currentProduct.views[currentViewIndex];
   const [zoom, setZoom] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleViewToggle = (index: number) => {
+      if (index === currentViewIndex || isAnimating) return;
+      setIsAnimating(true);
+      
+      setTimeout(() => {
+          setCurrentViewIndex(index);
+          setTimeout(() => {
+              setIsAnimating(false);
+          }, 50);
+      }, 300);
+  };
 
   // Quality Multiplier: 2x resolution for crisp text/edges
   const QUALITY = 2;
@@ -249,52 +267,78 @@ const CanvasArea: React.FC<CanvasAreaProps> = ({
 
   return (
     <div ref={containerRef} className={`flex-1 bg-background relative flex items-center justify-center overflow-hidden ${settings.showGrid ? 'workspace-grid' : ''}`}>
+       
+       {/* View Toggle (Front/Back) */}
+       {currentProduct.views.length > 1 && (
+           <div className="absolute top-8 left-0 right-0 flex justify-center z-40 pointer-events-none">
+               <div className="bg-surface/80 backdrop-blur-md border border-white/10 p-1.5 rounded-xl flex gap-1 shadow-2xl pointer-events-auto" dir="rtl">
+                   {currentProduct.views.map((view, index) => (
+                       <button 
+                           key={view.id}
+                           onClick={() => handleViewToggle(index)}
+                           className={`px-6 py-2 rounded-lg text-sm font-bold transition-all ${
+                               currentViewIndex === index 
+                               ? 'bg-primary text-white shadow-md' 
+                               : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                           }`}
+                       >
+                           {view.name === 'front' ? 'جلو' : view.name === 'back' ? 'پشت' : view.name}
+                       </button>
+                   ))}
+               </div>
+           </div>
+       )}
+
        {/* Product Display Container - Base Size (500x600) */}
        <div 
-         className="relative transition-all duration-300 animate-fade-in z-10 origin-center shadow-2xl"
+         className="relative z-10 origin-center shadow-2xl"
          style={{
              width: `${BASE_WIDTH}px`,
              height: `${BASE_HEIGHT}px`,
              transform: `scale(${zoom})`, 
          }}
        >
-         {/* Layer 1: The Product SVG (Technical Outline) */}
-         <ProductBackdrop view={currentView} color={currentProductColor} />
-         
-         {/* Layer 2: Printable Area Guides - Uses Base Coordinates */}
-         <div 
-            className={`absolute z-10 pointer-events-none transition-all duration-300 ${settings.showSafeZone ? 'opacity-100' : 'opacity-0'}`}
-            style={{
-                top: currentView.printArea.top,
-                left: currentView.printArea.left,
-                width: currentView.printArea.width,
-                height: currentView.printArea.height,
-            }}
-         >
-             {/* Dashed Border */}
-             <div className="w-full h-full border-2 border-dashed border-white/5 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)]"></div>
+         <div className={`absolute inset-0 transition-all duration-300 ${isAnimating ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+             {/* Layer 1: The Product SVG (Technical Outline) */}
+             <ProductBackdrop view={currentView} color={currentProductColor} />
              
-             {/* Tech Corners (Viewfinder style) */}
-             <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary/80"></div>
-             <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-primary/80"></div>
-             <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-primary/80"></div>
-             <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary/80"></div>
+             {/* Layer 2: Printable Area Guides - Uses Base Coordinates */}
+             <div 
+                className={`absolute z-10 pointer-events-none transition-all duration-300 ${settings.showSafeZone ? 'opacity-100' : 'opacity-0'}`}
+                style={{
+                    top: currentView.printArea.top,
+                    left: currentView.printArea.left,
+                    width: currentView.printArea.width,
+                    height: currentView.printArea.height,
+                }}
+             >
+                 {/* Dashed Border */}
+                 <div className="w-full h-full border-2 border-dashed border-white/5 rounded-lg shadow-[0_0_15px_rgba(0,0,0,0.2)]"></div>
+                 
+                 {/* Tech Corners (Viewfinder style) */}
+                 <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary/80"></div>
+                 <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-primary/80"></div>
+                 <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-primary/80"></div>
+                 <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-primary/80"></div>
 
-             {/* Label */}
-             <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-primary/90 rounded border border-white/5 shadow-sm">
-                 <span className="text-[10px] font-bold text-white">محدوده چاپ</span>
+                 {/* Label */}
+                 <div className="absolute -top-6 left-0 right-0 flex justify-center pointer-events-none">
+                     <div className="px-2 py-0.5 bg-primary/90 rounded border border-white/5 shadow-sm whitespace-nowrap">
+                         <span className="text-[10px] font-bold text-white">محدوده چاپ</span>
+                     </div>
+                 </div>
              </div>
-         </div>
 
-         {/* Layer 3: Fabric Canvas (Interactive) - Handles its own High DPI internally */}
-         <FabricLayer 
-            canvasRef={canvasRef} 
-            onObjectSelected={onObjectSelected}
-            onSelectionCleared={onSelectionCleared}
-            setLayers={setLayers}
-            quality={QUALITY}
-            printArea={currentView.printArea}
-         />
+             {/* Layer 3: Fabric Canvas (Interactive) - Handles its own High DPI internally */}
+             <FabricLayer 
+                canvasRef={canvasRef} 
+                onObjectSelected={onObjectSelected}
+                onSelectionCleared={onSelectionCleared}
+                setLayers={setLayers}
+                quality={QUALITY}
+                printArea={currentView.printArea}
+             />
+         </div>
        </div>
 
        {/* Floating Zoom Controls */}

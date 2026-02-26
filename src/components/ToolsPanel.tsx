@@ -136,10 +136,10 @@ const ToolsPanel: React.FC<ToolsPanelProps> = ({
 
   return (
     // Increased width to 340px to fit search + settings but not be too large
-    <div className="w-[340px] bg-surface/95 backdrop-blur-xl border-l border-white/5 h-full overflow-y-auto flex flex-col shadow-2xl relative z-10 text-right transition-[width] duration-300">
+    <div className="w-[300px] bg-surface/95 backdrop-blur-xl border-l border-white/5 h-full overflow-y-auto flex flex-col shadow-2xl relative z-10 text-right transition-[width] duration-300">
       {/* Header Section */}
-      <div className="p-6 pb-4 border-b border-white/5 bg-gradient-to-b from-surface-hover to-transparent">
-        <h2 className="text-xl font-display font-black text-white tracking-tight flex items-center justify-end gap-2">
+      <div className="p-6 pb-4 border-b border-white/5 bg-gradient-to-b from-surface-hover to-transparent" dir="rtl">
+        <h2 className="text-xl font-display font-black text-white tracking-tight flex items-center justify-start gap-2">
           {activeTab === TabType.PRODUCTS && 'انتخاب محصول'}
           {activeTab === TabType.TEXT && 'افزودن متن'}
           {activeTab === TabType.GRAPHICS && 'کتابخانه گرافیک'}
@@ -148,7 +148,7 @@ const ToolsPanel: React.FC<ToolsPanelProps> = ({
           {activeTab === TabType.LAYERS && 'لایه‌ها'}
           {activeTab === TabType.SETTINGS && 'تنظیمات'}
         </h2>
-        <p className="text-[11px] font-medium text-slate-400 mt-1 opacity-80 leading-relaxed">
+        <p className="text-[11px] font-medium text-slate-400 mt-1 opacity-80 leading-relaxed text-right">
           {activeTab === TabType.PRODUCTS && 'از کاتالوگ ممتاز ما انتخاب کنید'}
           {activeTab === TabType.TEXT && 'تایپوگرافی و شعارهای خلاقانه'}
           {activeTab === TabType.AI_STUDIO && 'طراحی هوشمند با Gemini 2.0'}
@@ -159,7 +159,7 @@ const ToolsPanel: React.FC<ToolsPanelProps> = ({
         </p>
       </div>
 
-      <div className={`flex-1 overflow-y-auto p-6 transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`flex-1 overflow-y-auto p-4 transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         
         {activeTab === TabType.PRODUCTS && (
           <ProductsPanel 

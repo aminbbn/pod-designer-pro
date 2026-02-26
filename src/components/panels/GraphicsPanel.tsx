@@ -228,18 +228,18 @@ const GraphicsPanel: React.FC<GraphicsPanelProps> = ({
               {/* 1. Dimensions */}
               <div className="bg-surface rounded-xl border border-white/5 overflow-hidden">
                   <div className="p-3 bg-surface-hover flex items-center gap-2 text-xs font-bold text-slate-300 border-b border-white/5"><Move size={14} className="text-primary" />موقعیت و ابعاد</div>
-                  <div className="p-4 space-y-4">
+                  <div className="p-3 space-y-3">
                         <div className="grid grid-cols-2 gap-3">
                             <input type="number" value={Math.round(selectedObject?.left || 0)} onChange={(e) => onUpdateObject('left', parseInt(e.target.value))} className="w-full bg-background border border-white/5 rounded-lg p-2 text-white text-xs text-center focus:border-primary/50 transition-colors" placeholder="X" />
                             <input type="number" value={Math.round(selectedObject?.top || 0)} onChange={(e) => onUpdateObject('top', parseInt(e.target.value))} className="w-full bg-background border border-white/5 rounded-lg p-2 text-white text-xs text-center focus:border-primary/50 transition-colors" placeholder="Y" />
                         </div>
                         <div>
                             <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>چرخش</span><span className="font-mono text-primary">{rotation}°</span></div>
-                            <input type="range" min="0" max="360" value={rotation} onChange={(e) => onUpdateObject('angle', parseInt(e.target.value))} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                            <input type="range" min="0" max="360" value={rotation} onChange={(e) => onUpdateObject('angle', parseInt(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                         </div>
                         <div>
                             <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>مقیاس</span><span className="font-mono text-primary">{scaleX}%</span></div>
-                            <input type="range" min="10" max="300" value={scaleX} onChange={(e) => { const val = parseInt(e.target.value) / 100; onUpdateObject('scaleX', val); onUpdateObject('scaleY', val); }} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                            <input type="range" min="10" max="300" value={scaleX} onChange={(e) => { const val = parseInt(e.target.value) / 100; onUpdateObject('scaleX', val); onUpdateObject('scaleY', val); }} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                         </div>
                   </div>
               </div>
@@ -311,7 +311,7 @@ const GraphicsPanel: React.FC<GraphicsPanelProps> = ({
                                             <span>ضخامت</span>
                                             <span>{selectedObject.strokeWidth}px</span>
                                         </div>
-                                        <input type="range" min="0.5" max="10" step="0.5" value={selectedObject?.strokeWidth || 0} onChange={(e) => onUpdateObject('strokeWidth', parseFloat(e.target.value))} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                                        <input type="range" min="0.5" max="10" step="0.5" value={selectedObject?.strokeWidth || 0} onChange={(e) => onUpdateObject('strokeWidth', parseFloat(e.target.value))} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                     </div>
                                     
                                     {/* Paint First Toggle */}
@@ -347,19 +347,19 @@ const GraphicsPanel: React.FC<GraphicsPanelProps> = ({
                                  <div className="space-y-4 animate-fade-in pl-6">
                                      <div>
                                          <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>شفافیت</span><span>{Math.round(shadowOpacity * 100)}%</span></div>
-                                         <input type="range" min="0" max="1" step="0.05" value={shadowOpacity} onChange={(e) => updateShadow({ opacity: parseFloat(e.target.value) })} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                                         <input type="range" min="0" max="1" step="0.05" value={shadowOpacity} onChange={(e) => updateShadow({ opacity: parseFloat(e.target.value) })} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                      </div>
                                      <div>
                                          <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>محو شدگی</span><span>{currentShadow.blur}px</span></div>
-                                         <input type="range" min="0" max="50" value={currentShadow.blur || 0} onChange={(e) => updateShadow({ blur: parseInt(e.target.value) })} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                                         <input type="range" min="0" max="50" value={currentShadow.blur || 0} onChange={(e) => updateShadow({ blur: parseInt(e.target.value) })} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                      </div>
                                      <div>
                                          <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>زاویه</span><span>{currentAngle}°</span></div>
-                                         <input type="range" min="-180" max="180" value={currentAngle} onChange={(e) => updateShadow({ angle: parseInt(e.target.value) })} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                                         <input type="range" min="-180" max="180" value={currentAngle} onChange={(e) => updateShadow({ angle: parseInt(e.target.value) })} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                      </div>
                                      <div>
                                          <div className="flex justify-between text-[10px] text-slate-400 mb-1"><span>فاصله</span><span>{currentDist}px</span></div>
-                                         <input type="range" min="0" max="100" value={currentDist} onChange={(e) => updateShadow({ dist: parseInt(e.target.value) })} className="w-full h-1 bg-background rounded appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-2 [&::-webkit-slider-thumb]:h-2 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full" />
+                                         <input type="range" min="0" max="100" value={currentDist} onChange={(e) => updateShadow({ dist: parseInt(e.target.value) })} className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:shadow-md" />
                                      </div>
                                  </div>
                             )}
